@@ -619,6 +619,18 @@ const template = [
         role: 'selectall'
       }
     ]
+  },
+  {
+    label: 'Developer',
+    submenu: [
+      {
+        label: 'Toggle Developer Tools',
+        accelerator: process.platform === 'darwin'
+          ? 'Alt+Command+I'
+          : 'Ctrl+Shift+I',
+        click () { mainWindow.webContents.toggleDevTools() }
+      }
+    ]
   }
 ]
 

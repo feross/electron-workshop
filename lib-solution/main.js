@@ -67,7 +67,7 @@ const template = [
     label: 'Developer',
     submenu: [
       {
-        label: 'Developer Tools',
+        label: 'Toggle Developer Tools',
         accelerator: process.platform === 'darwin'
           ? 'Alt+Command+I'
           : 'Ctrl+Shift+I',
