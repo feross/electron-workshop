@@ -82,17 +82,20 @@ Right now, displaying a user interface when the application is `ready` is our pr
 const electron = require('electron')
 const app = electron.app
 
-app.on('ready', function () {
+app.on('ready', () => {
   console.log('The application is ready.')
 })
 ```
 
-There isn't much to look at yet, but if we run `electron .`, you should notice the following.
+There isn't much to look at yet, but if we run `npm start`, you should notice the following.
 
 1. Our message is logged to the console.
 1. An Electron icon pops up in the Dock.
 
 Hit `Control-C` to kill the application.
+
+Note: The `npm start` command is just running `electron .` for you. You can use `electron .` directly, but you will need to install electron
+globally with `npm install -g electron`. In general, it's better to just use the locally-installed `electron` binary. If you're curious, that binary exists at `node_modules/.bin/electron`.
 
 ### Firing Up a Renderer Process
 
@@ -118,12 +121,12 @@ const BrowserWindow = electron.BrowserWindow
 
 let mainWindow = null
 
-app.on('ready', function () {
+app.on('ready', () => {
   console.log('The application is ready.')
 
   mainWindow = new BrowserWindow()
 
-  mainWindow.on('closed', function () {
+  mainWindow.on('closed', () => {
     mainWindow = null
   })
 })
@@ -146,7 +149,7 @@ const path = require('path')
 We'll also update the `'ready'` handler as follows:
 
 ```js
-app.on('ready', function () {
+app.on('ready', () => {
   console.log('The application is ready.')
 
   mainWindow = new BrowserWindow()
@@ -185,7 +188,7 @@ Actions like accessing the filesystem and calling native dialogs and menus are b
 
 Let's start by adding some elements to the user interface for displaying our content once it's loaded.
 
-In `index.html`, replace the body with the following:
+In `index.html`, replace the contents of `<body>` with the following:
 
 ```html
 <section class="controls">
@@ -220,10 +223,10 @@ function openFile () {
 }
 ```
 
-We'll call this function immediately when the application is ready for now. If the user cancels the file open dialog, `files` will be `undefined`. If that happens, we're return early so that we don't get any errors down the line.
+We'll call this function immediately when the application is ready for now. If the user cancels the file open dialog, `files` will be `undefined`. If that happens, we return early so that we don't get any errors down the line.
 
 ```js
-app.on('ready', function () {
+app.on('ready', () => {
   console.log('The application is ready.')
 
   mainWindow = new BrowserWindow()
@@ -302,6 +305,8 @@ Instead of logging to the console, let's send the content to the `mainWindow`. R
 mainWindow.webContents.send('file-opened', file, content)
 ```
 
+This won't make anything appear in the window just yet, because we need to handle this event in `renderer.js`, which we'll do in the next challenge!
+
 ### Optional: Learn something extra!
 
 1. Try setting a custom label for the confirmation button.
@@ -321,7 +326,7 @@ All of the code we've written so far has been in the main process. Now, it's tim
 It's going to be helpful to have access to the Chrome Developer Tools in our renderer process. Let's have Electron pull those up when our browser window loads.
 
 ```js
-app.on('ready', function () {
+app.on('ready', () => {
   // More code above…
 
   mainWindow.webContents.openDevTools()
@@ -342,7 +347,7 @@ const ipc = electron.ipcRenderer
 When we load a file, the main process is sending our renderer process a message with the contents over the `file-opened` channel. (This channel name is completely arbitrary could very well be `sandwich`.) Let's set up a listener.
 
 ```js
-ipc.on('file-opened', function (event, file, content) {
+ipc.on('file-opened', (event, file, content) => {
   console.log(content)
 })
 ```
@@ -370,8 +375,8 @@ const $copyHtmlButton = $('#copy-html')
 When the renderer process gets a message on the `file-opened` channel from the main process, we'll display those contents in the `$markdownView` element.
 
 ```js
-ipc.on('file-opened', function (event, file, content) {
-  $markdownView.text(content)
+ipc.on('file-opened', (event, file, content) => {
+  $markdownView.val(content)
 })
 ```
 
@@ -386,7 +391,7 @@ const marked = require('marked')
 We'll probably want to convert Markdown to HTML in multiple places in our application, so let's do it in a function that we can reuse later if we need to. Add the following to `renderer.js`.
 
 ```js
-function renderMarkdownToHtml(markdown) {
+function renderMarkdownToHtml (markdown) {
   const html = marked(markdown)
   $htmlView.html(html)
 }
@@ -395,8 +400,8 @@ function renderMarkdownToHtml(markdown) {
 The first time we'll probably want to do this is when we load a Markdown file. Update your event listener as follows:
 
 ```js
-ipc.on('file-opened', function (event, file, content) {
-  $markdownView.text(content)
+ipc.on('file-opened', (event, file, content) => {
+  $markdownView.val(content)
   renderMarkdownToHtml(content)
 })
 ```
@@ -408,8 +413,8 @@ Open a file in the application and verify that it works.
 Whenever the user enters a key in the Markdown view, we'll want to update the HTML view to reflect the current state of the Markdown view. Let's listen for the `keyup` event and reuse our `renderMarkdownToHtml` function.
 
 ```js
-$markdownView.on('keyup', function () {
-  const content = $(this).val()
+$markdownView.on('keyup', () => {
+  const content = $(event.target).val()
   renderMarkdownToHtml(content)
 })
 ```
@@ -524,11 +529,17 @@ $saveFileButton.on('click', () => {
 
 We've successfully implemented a first pass at saving files to the filesystem with Electron.
 
+### Optional: Learn something extra!
+
+1. Right now, each time we click the "Save HTML" button, we have to select the location to save the file. Make the app remember the last save location so clicking save again will just save to the same place, without showing the user a dialog. Also, when a file is opened, the first save should also not cause a prompt, but save to the same location.
+
+2. Add a "Save As..." button, in addition to "Save". What's the difference between the two in most apps? (Side note: Why does "Save As..." have a ellipsis while "Save" does not? What does the ellipsis signify?)
+
 ## Challenge 7: Adding Menu Items
 
 Having a button for opening and saving files is pretty neat, but it's not the pattern we're used to in desktop applications. Typically, desktop applications have a "File" menu "Open" and "Save" items. Up to this point, Electron has given us some sensible defaults for menu items. (Fire up your application and check out the menu bar if haven't already.)
 
-Let's go and pull in Electron's `Menu` module.
+Let's go and pull in Electron's `Menu` module. (This goes in `main.js`.)
 
 ```js
 const Menu = electron.Menu
@@ -543,7 +554,7 @@ const menu = Menu.buildFromTemplate(template)
 Once we have a menu object, we can override the default menu that Electron gave us when the `app` fires it's `ready` event.
 
 ```js
-app.on('ready', function () {
+app.on('ready', () => {
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
 })
@@ -557,14 +568,14 @@ const template = [
     label: 'File',
     submenu: [
       {
-        label: 'Open',
+        label: 'Open...',
         accelerator: 'CmdOrCtrl+O',
-        click() { openFile() }
+        click () { openFile() }
       },
       {
         label: 'Save',
         accelerator: 'CmdOrCtrl+S',
-        click() { saveFile() }
+        click () { saveFile() }
       }
     ]
   },
@@ -603,12 +614,12 @@ const template = [
         label: 'Select All',
         accelerator: 'CmdOrCtrl+A',
         role: 'selectall'
-      },
+      }
     ]
   }
 ]
 
-if (process.platform == 'darwin') {
+if (process.platform === 'darwin') {
   const name = app.getName()
   template.unshift({
     label: name,
@@ -648,14 +659,14 @@ if (process.platform == 'darwin') {
       {
         label: 'Quit',
         accelerator: 'Command+Q',
-        click() { app.quit() }
-      },
+        click () { app.quit() }
+      }
     ]
   })
 }
 ```
 
-Welcome back! Let's take a closer look some of the moving pieces in the large chunk of code above. The template is an array of menu items. In this case, we have "File" and "Edit"—each with their own submenus. Under "File," we have two menu items: "Save" and "Open." When clicked, they fire `openFile` and `saveFile` respectively. We're also assigning each an "accelerator" (also know as a shortcut or hot key).
+Welcome back! Let's take a closer look some of the moving pieces in the large chunk of code above. The template is an array of menu items. In this case, we have "File" and "Edit"—each with their own submenus. Under "File," we have two menu items: "Save" and "Open...". When clicked, they fire `openFile` and `saveFile` respectively. We're also assigning each an "accelerator" (also know as a shortcut or hot key).
 
 In the "Edit" menu, we have some of the familiar commands: undo, redo, copy, cut, paste, select all. We probably don't want to reinvent the wheel. It would be great if each would do their normal thing. Electron allows us to define their "role," which will trigger the native OS behavior.
 
@@ -667,19 +678,21 @@ In the "Edit" menu, we have some of the familiar commands: undo, redo, copy, cut
 }
 ```
 
-You might also notice that we're defining the accelerator as "CmdOrCtrl+C". Electron will make the right choice on our behalf when it compiles for OS X, Windows, and/or Linux.
+You might also notice that we're defining the accelerator as "CmdOrCtrl+C". Electron will make the right choice on our behalf when it compiles for Mac, Windows, and/or Linux.
 
-Application for OS X have an additional menu with the application's name and some common OS-specific menu items. We only want to add this menu if our Electron application is running in OS X.
+Application for Mac have an additional menu with the application's name and some common OS-specific menu items. We only want to add this menu if our Electron application is running in Mac.
 
 ```js
 if (process.platform == 'darwin') { … }
 ```
 
-[Darwin][] is the UNIX foundation that OS X is built on. The `process.platform` is baked into Node and returns 'darwin', 'freebsd', 'linux', 'sunos' or 'win32' depending on the platform it's being run from.
+[Darwin][] is the UNIX foundation that Mac OS is built on. The `process.platform` is baked into Node and returns 'darwin', 'freebsd', 'linux', 'sunos' or 'win32' depending on the platform it's being run from.
 
 [Darwin]: https://en.wikipedia.org/wiki/Darwin_(operating_system)
 
-We'll use `unshift` to push it onto the front of the array. OS X will stubbornly continue to use "Electron" as the application title. In order to override this, we'll have to adjust the `plist` file that Electron generates when it builds the file. This is the same process we'll use for a custom application icon.
+We'll use `unshift` to push it onto the front of the array.
+
+Note: Mac will stubbornly continue to use "Electron" as the application title. In order to override this, we'll have to adjust the `plist` file that Electron generates when it builds the file, because that is what determines the application name on Mac OS. Modifying the `plist` file is the same process we'll use for a custom application icon. We'll get to that later.
 
 ## Challenge 8: Electron's `shell` Module
 
@@ -694,9 +707,9 @@ const shell = electron.shell
 Now, we'll listen for link clicks and ask them politely to open in a new window instead of stepping over our little application.
 
 ```js
-$(document).on('click', 'a[href^="http"]', function (event) {
+$(document).on('click', 'a[href^="http"]', (event) => {
   event.preventDefault()
-  shell.openExternal(this.href)
+  shell.openExternal(event.target.href)
 })
 ```
 
@@ -715,15 +728,21 @@ As you can see, adding files to the list of recent documents is easy. What we ha
 Whenever we select a file from the list of recent documents, `app` fires an `open-file` event. We can listen for this event, read the file, and then send it to the renderer process.
 
 ```js
-app.on('open-file', function (event, file) {
+app.on('open-file', (event, file) => {
   const content = fs.readFileSync(file).toString()
   mainWindow.webContents.send('file-opened', file, content)
 })
 ```
 
+### Optional: Learn something extra!
+
+1. Take a look at the documentation for the [methods in `app`](http://electron.atom.io/docs/api/app/#methods).
+
+2. What other interesting OS integrations are available through that module that would be useful for a markdown editor?
+
 ## Challenge 10: Accessing the Outside World
 
-As we've seen with the recent documents list, one of the really cool things about Electron is that we can interact with the operating system around us. Let's add two more features to Firesale.
+As we've seen with the recent documents list, one of the really cool things about Electron is that we can interact with the operating system around us. Let's add two more features to our app.
 
 - A "Show in File System" button that will ask the operating system to show us where the markdown file is located on in either the Finder or Windows Explorer.
 - A "Open in Default Editor" button that will open the current file in whatever application has designated as the default application for Markdown files.
@@ -766,23 +785,97 @@ let currentFile = null
 We'll also modify our `file-opened` event listener to update `currentFile` and enable the buttons.
 
 ```js
-ipc.on('file-opened', function (event, file, content) {
+ipc.on('file-opened', (event, file, content) => {
   currentFile = file
 
   $showInFileSystemButton.attr('disabled', false)
   $openInDefaultEditorButton.attr('disabled', false)
 
-  $markdownView.text(content)
+  $markdownView.val(content)
   renderMarkdownToHtml(content)
+})
+```
+
+Then we need to use the `shell` package again to actually implement the functionality:
+
+```js
+$showInFileSystemButton.on('click', () => {
+  shell.showItemInFolder(currentFile)
+})
+
+$openInDefaultEditorButton.on('click', () => {
+  shell.openItem(currentFile)
 })
 ```
 
 Yea, that's actually it. Don't take my word for it. Verify that it works for yourself.
 
-### Optional: Learn something extra!
+## Challenge 11: Drag and Drop
 
-1. Improve the UI. For example, try making the divider between the markdown and HTML views draggable so the user can set their size.
+### Drag and drop on the window
 
-2. :bowtie: Add emoji support, like the [vmd](https://github.com/yoshuawuyts/vmd) markdown editor has.
+Try dragging a random (.png, .jpg, .pdf, ertc.) file to the app window. What happens?
 
-3. Add file watching support, like the [vmd](https://github.com/yoshuawuyts/vmd) markdown editor has. Make it so local files that are opened are watched for changes and the viewer will automatically update when a file has been changed. This makes it ideal for writing documents in your favorite text editor so you get a live preview. In "watch mode", the editor textarea should be hidden since the user will using their own editor.
+You should get a "save file" dialog. This is default browser behavior. Electron is trying to navigate the given file. Chrome also exhibits the same behavior. However, this isn't very useful for our app, so let's open drag-and-dropped files in the app, same as the "Open File" button.
+
+Use the [`drag-drop`](https://npmjs.com/package/drag-drop) package to capture drop events on `document.body`. The `drag-drop` module automatically takes care of preventing the default browser event handler.
+
+No code that you can just copy-paste for this one! You're an advanced workshopper from here on out. :-)
+
+Once you've completed this challenge, verify that drag and drop works, then move on to the next challenge.
+
+### Drag and drop on the app icon (Mac)
+
+### Challenge 12: More complete OS integrations
+
+Right-clicking on the app icon should show useful functionality, like an "Open File..." item. This is what an app icon menu looks like:
+
+![](/images/04-dock-menu.png)
+
+You can add a menu to the dock icon using the `app.dock.setMenu(menu)` API for Mac. There is a similar feature on Windows called "User Tasks" that you can access via the `app.setUserTasks(tasks)` API. For Linux, you can create a ".desktop" file that you can install into a special OS folder to add a menu to the app icon in the Unity Launcher.
+
+### Challenge 13: Package the app
+
+Now, let's prepare the app to be shipped to real users. This is called "packaging" an app. Nearly all of the magic is handled by a package called [`electron-packager`](https://github.com/electron-userland/electron-packager).
+
+You can quickly see it in action by running `npm run package`. This will build an executable version of the application that works on the
+current OS and architecture (e.g. Mac 64-bit, Windows 32-bit, Linux 64-bit, etc.).
+
+Note: When you launch the exectuble on Mac, the menu bar should show the correct app title "Markdown Editor" now, not "Electron".
+
+To build the app for all possible architectures, you can use `npm run package-all`. Note: this can take a while because a ~40MB precompiled version of Electron must be downloaded for each OS/architecture combination. Currently this is:
+
+- Mac, 64-bit
+- Mac, app store build
+- Windows, 64-bit
+- Windows, 32-bit
+- Linux, 64-bit
+- Linux, 32-bit
+- Linux, armv7l
+
+One of the nicest things about `electron-packager` is that you don't need to own a Mac, Windows, and Linux computer (or use VMs) in order to create binaries for each of these platforms, the way that most native app development works. Instead, `electron-package` downloads a precompiled Electron app and replaces the `app` folder inside with the code from your app, and replaces the app icon with your app icon, if you have one. That's it.
+
+Things get more complicated if you use a node module that contains native code. That's because that code needs to compiled separately for each platform. To keep things simple, try to avoid using modules that contain native code unless absolutely necessary. That will allow you to build for all platforms from any platform.
+
+There are lots more advanced things you can support in your build process like:
+
+- Create a Mac .DMG file for easier install, and compression
+- Create a Windows installer, for easier install.
+- Create a Windows "Portable App" build.
+- Create a Debian/Ubuntu .deb file, for easier install.
+
+You'll also want to sign the binaries that you produce. On Mac and Windows, it's very important to sign your binaries or the OS will show scary warnings to the user.
+
+You can see how to do all these things and more by taking a look at the [well-commented build file for WebTorrent Desktop](https://github.com/feross/webtorrent-desktop/blob/master/bin/package.js).
+
+### Challenge 14: Go crazy!
+
+If you finish early, here are some ideas for extra features to add:
+
+1. Improve the UI. For example, try making the buttons at the top of the app look less like a web page. Removing the buttons entirely and putting their functionality into the app menu is a great idea.
+
+2. Improve the UI, part 2. As another idea, try making the divider between the markdown and HTML views draggable so the user can set their size.
+
+3. :bowtie: Add emoji support, like the [vmd](https://github.com/yoshuawuyts/vmd) markdown editor has.
+
+4. Add file watching support, like the [vmd](https://github.com/yoshuawuyts/vmd) markdown editor has. Make it so local files that are opened are watched for changes and the viewer will automatically update when a file has been changed. This makes it ideal for writing documents in your favorite text editor so you get a live preview. In "watch mode", the editor textarea should be hidden since the user will using their own editor.

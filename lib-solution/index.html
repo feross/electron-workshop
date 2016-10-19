@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Markdown Editor</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+  </head>
+  <body>
+
+    <section class="controls">
+      <button id="open-file">Open File</button>
+      <button id="copy-html">Copy HTML</button>
+      <button id="save-file">Save HTML</button>
+      <button id="show-in-file-system" disabled="true">Show in File System</button>
+      <button id="open-in-default-editor" disabled="true">Open in Default Editor</button>
+    </section>
+
+    <section class="content">
+      <textarea class="raw-markdown"></textarea>
+      <div class="rendered-html"></div>
+    </section>
+
+  </body>
+  <script>
+    require('./renderer')
+  </script>
+</html>
