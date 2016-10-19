@@ -26,7 +26,7 @@ Vast portions of this workshop are based on a similar [workshop](https://gist.gi
 
 ## Prerequisites
 
-Participants should have the latest version of [Node.js](http://nodejs.org/) installed.
+Participants should have the latest version of [Node.js](http://nodejs.org/) installed. (The latest version is v6.x LTS.)
 
 We'll primarily be working through one project today. But there is a second one, which is an opportunity to practice on your own after the workshop. The _best_ way to get set up and ready to roll before the workshop is to clone this repository and run `npm install` within it.
 
