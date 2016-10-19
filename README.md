@@ -223,7 +223,7 @@ function openFile () {
 }
 ```
 
-We'll call this function immediately when the application is ready for now. If the user cancels the file open dialog, `files` will be `undefined`. If that happens, we return early so that we don't get any errors down the line.
+We'll call this function immediately once the browser window has loaded. If the user cancels the file open dialog, `files` will be `undefined`. If that happens, we return early so that we don't get any errors down the line.
 
 ```js
 app.on('ready', () => {
@@ -233,7 +233,10 @@ app.on('ready', () => {
 
   mainWindow.loadURL('file://' + __dirname + '/index.html')
 
-  openFile()
+  // This event fires once the browser window's DOM is loaded
+  mainWindow.webContents.on('did-finish-load', () => {
+    openFile()
+  })
 
   mainWindow.on('closed', function() {
     mainWindow = null
@@ -413,7 +416,7 @@ Open a file in the application and verify that it works.
 Whenever the user enters a key in the Markdown view, we'll want to update the HTML view to reflect the current state of the Markdown view. Let's listen for the `keyup` event and reuse our `renderMarkdownToHtml` function.
 
 ```js
-$markdownView.on('keyup', () => {
+$markdownView.on('keyup', (event) => {
   const content = $(event.target).val()
   renderMarkdownToHtml(content)
 })
