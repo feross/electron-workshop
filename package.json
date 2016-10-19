@@ -1,0 +1,39 @@
+{
+  "name": "electron-workshop",
+  "description": "A Markdown-to-HTML renderer",
+  "version": "1.0.0",
+  "author": {
+    "name": "Feross Aboukhadijeh",
+    "email": "feross@feross.org",
+    "url": "http://feross.org/"
+  },
+  "bugs": {
+    "url": "https://github.com/feross/electron-workshop/issues"
+  },
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "marked": "^0.3.5"
+  },
+  "devDependencies": {
+    "devtron": "^1.3.0",
+    "electron": "^1.4.3",
+    "electron-packager": "^8.1.0",
+    "spectron": "^3.4.0",
+    "standard": "^8.4.0"
+  },
+  "keywords": [
+    "electron",
+    "workshop"
+  ],
+  "license": "MIT",
+  "main": "lib/main.js",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/feross/electron-workshop.git"
+  },
+  "scripts": {
+    "build": "electron-packager . 'Markdown Editor' --platform=all --arch=all",
+    "start": "electron ."
+  }
+}
