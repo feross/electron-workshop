@@ -440,7 +440,7 @@ Electron comes with a `remote` module, which allows us to pull in functionality 
 const remote = electron.remote
 ```
 
-Once we have the remote module, we can use it load up the main process.
+Once we have the remote module, we can use it to load up the main process.
 
 ```js
 const mainProcess = remote.require('./main')
