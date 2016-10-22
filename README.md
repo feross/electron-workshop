@@ -318,7 +318,7 @@ This won't make anything appear in the window just yet, because we need to handl
 
 ## Challenge 3: Writing Renderer Code
 
-All of the code we've written so far has been in the main process. Now, it's time to write some code in the renderer process to—umm—render our content. Let's load up `renderer.js` by adding the following to `index.html`.
+All of the code we've written so far has been in the main process. Now, it's time to write some code in the renderer process to—umm—render our content. Let's load up `renderer.js` by adding the following before the closing `<body>` tag in `index.html`.
 
 ```html
 <script>
