@@ -476,7 +476,7 @@ It's not necessary, but we can remove the call to `openFile()` when the applicat
 
 Now that we have the first button in place, we'll go ahead and get the second button working.
 
-The second button is labeled "Copy HTML." When it's working it should take the rendered HTML output and write it to the clipboard. It shouldn't be surprising to you when I say that Electron has a `clipboard` module that makes it easy to work with the clipboard. Because it works with the OS's clipboard, we'll require it from the main process:
+The second button is labeled "Copy HTML." When it's working it should take the rendered HTML output and write it to the clipboard. It shouldn't be surprising to you when I say that Electron has a `clipboard` module that makes it easy to work with the clipboard. Because it works with the OS's clipboard, we'll require it from the main process.
 
 Let's require the `clipboard` module in `renderer.js`:
 
