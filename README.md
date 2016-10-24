@@ -92,7 +92,7 @@ There isn't much to look at yet, but if we run `npm start`, you should notice th
 1. Our message is logged to the console.
 1. An Electron icon pops up in the Dock.
 
-Hit `Control-C` to kill the application.
+Hint `Control-C` to kill the application.
 
 Note: The `npm start` command is just running `electron .` for you. You can use `electron .` directly, but you will need to install electron
 globally with `npm install -g electron`. In general, it's better to just use the locally-installed `electron` binary. If you're curious, that binary exists at `node_modules/.bin/electron`.
