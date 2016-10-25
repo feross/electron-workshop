@@ -359,10 +359,11 @@ You should now see the contents of the file you opened in the console of your re
 
 ### Displaying Content on the Page
 
-We'll use jQuery in our renderer process to make things a little more concise. Let's require it in our renderer process as follows:
+We'll use a shorthand for `querySelector` in our renderer process to make things
+a little more concise. Let's create it in our renderer process as follows:
 
 ```js
-const $ = require('jquery')
+const $ = selector => document.querySelector(selector)
 ```
 
 We'll also be a little proactive and cache selectors for our markdown view, rendered HTML view, and buttons.
@@ -379,7 +380,7 @@ When the renderer process gets a message on the `file-opened` channel from the m
 
 ```js
 ipc.on('file-opened', (event, file, content) => {
-  $markdownView.val(content)
+  $markdownView.value = content
 })
 ```
 
@@ -396,7 +397,7 @@ We'll probably want to convert Markdown to HTML in multiple places in our applic
 ```js
 function renderMarkdownToHtml (markdown) {
   const html = marked(markdown)
-  $htmlView.html(html)
+  $htmlView.innerHTML = html
 }
 ```
 
@@ -404,7 +405,7 @@ The first time we'll probably want to do this is when we load a Markdown file. U
 
 ```js
 ipc.on('file-opened', (event, file, content) => {
-  $markdownView.val(content)
+  $markdownView.value = content
   renderMarkdownToHtml(content)
 })
 ```
@@ -416,8 +417,8 @@ Open a file in the application and verify that it works.
 Whenever the user enters a key in the Markdown view, we'll want to update the HTML view to reflect the current state of the Markdown view. Let's listen for the `keyup` event and reuse our `renderMarkdownToHtml` function.
 
 ```js
-$markdownView.on('keyup', (event) => {
-  const content = $(event.target).val()
+$markdownView.addEventListener('keyup', (event) => {
+  const content = event.target.value
   renderMarkdownToHtml(content)
 })
 ```
@@ -457,7 +458,7 @@ exports.openFile = openFile
 Our `openFile` function is now available on the `mainProcess` object in `renderer.js`.
 
 ```js
-$openFileButton.on('click', () => {
+$openFileButton.addEventListener('click', () => {
   mainProcess.openFile()
 })
 ```
@@ -488,7 +489,7 @@ When the user clicks on the "Copy HTML" button, we'll go ahead and write the con
 
 ```js
 $copyHtmlButton.on('click', () => {
-  const html = $htmlView.html()
+  const html = $htmlView.innerHTML
   clipboard.writeText(html)
 })
 ```
@@ -524,8 +525,8 @@ exports.saveFile = saveFile
 Pulling up the save dialog in the renderer process is almost the same as pulling up the open dialog, with the twist that we'll want to send off the data that we'd like written to the file system.
 
 ```js
-$saveFileButton.on('click', () => {
-  const html = $htmlView.html()
+$saveFileButton.addEventListener('click', () => {
+  const html = $htmlView.innerHTML
   mainProcess.saveFile(html)
 })
 ```
@@ -722,9 +723,11 @@ const shell = electron.shell
 Now, we'll listen for link clicks and ask them politely to open in a new window instead of stepping over our little application.
 
 ```js
-$(document).on('click', 'a[href^="http"]', (event) => {
-  event.preventDefault()
-  shell.openExternal(event.target.href)
+document.body.addEventListener('click', (event) => {
+  if (event.target.href && event.target.href.startsWith('http')) {
+    event.preventDefault()
+    shell.openExternal(event.target.href)
+  }
 })
 ```
 
@@ -803,10 +806,10 @@ We'll also modify our `file-opened` event listener to update `currentFile` and e
 ipc.on('file-opened', (event, file, content) => {
   currentFile = file
 
-  $showInFileSystemButton.attr('disabled', false)
-  $openInDefaultEditorButton.attr('disabled', false)
+  $showInFileSystemButton.disabled = false
+  $openInDefaultEditorButton.disabled = false
 
-  $markdownView.val(content)
+  $markdownView.value = content
   renderMarkdownToHtml(content)
 })
 ```
@@ -814,11 +817,11 @@ ipc.on('file-opened', (event, file, content) => {
 Then we need to use the `shell` package again to actually implement the functionality:
 
 ```js
-$showInFileSystemButton.on('click', () => {
+$showInFileSystemButton.addEventListener('click', () => {
   shell.showItemInFolder(currentFile)
 })
 
-$openInDefaultEditorButton.on('click', () => {
+$openInDefaultEditorButton.addEventListener('click', () => {
   shell.openItem(currentFile)
 })
 ```

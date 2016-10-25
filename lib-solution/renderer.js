@@ -5,7 +5,7 @@ const remote = electron.remote
 const clipboard = remote.clipboard
 const shell = electron.shell
 
-const $ = require('jquery')
+const $ = selector => document.querySelector(selector)
 const mainProcess = remote.require('./main')
 const marked = require('marked')
 
@@ -22,46 +22,48 @@ let currentFile = null
 ipc.on('file-opened', (event, file, content) => {
   currentFile = file
 
-  $showInFileSystemButton.attr('disabled', false)
-  $openInDefaultEditorButton.attr('disabled', false)
+  $showInFileSystemButton.disabled = false
+  $openInDefaultEditorButton.disabled = false
 
-  $markdownView.val(content)
+  $markdownView.value = content
   renderMarkdownToHtml(content)
 })
 
 function renderMarkdownToHtml (markdown) {
   const html = marked(markdown)
-  $htmlView.html(html)
+  $htmlView.innerHTML = html
 }
 
-$markdownView.on('keyup', (event) => {
-  const content = $(event.target).val()
+$markdownView.addEventListener('keyup', (event) => {
+  const content = event.target.value
   renderMarkdownToHtml(content)
 })
 
-$openFileButton.on('click', () => {
+$openFileButton.addEventListener('click', () => {
   mainProcess.openFile()
 })
 
-$copyHtmlButton.on('click', () => {
-  const html = $htmlView.html()
+$copyHtmlButton.addEventListener('click', () => {
+  const html = $htmlView.innerHTML
   clipboard.writeText(html)
 })
 
-$saveFileButton.on('click', () => {
-  const html = $htmlView.html()
+$saveFileButton.addEventListener('click', () => {
+  const html = $htmlView.innerHTML
   mainProcess.saveFile(html)
 })
 
-$(document).on('click', 'a[href^="http"]', (event) => {
-  event.preventDefault()
-  shell.openExternal(event.target.href)
+document.addEventListener('click', (event) => {
+  if (event.target.href && event.target.href.startsWith('http')) {
+    event.preventDefault()
+    shell.openExternal(event.target.href)
+  }
 })
 
-$showInFileSystemButton.on('click', () => {
+$showInFileSystemButton.addEventListener('click', () => {
   shell.showItemInFolder(currentFile)
 })
 
-$openInDefaultEditorButton.on('click', () => {
+$openInDefaultEditorButton.addEventListener('click', () => {
   shell.openItem(currentFile)
 })
