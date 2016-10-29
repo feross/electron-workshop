@@ -724,7 +724,7 @@ Now, we'll listen for link clicks and ask them politely to open in a new window 
 
 ```js
 document.body.addEventListener('click', (event) => {
-  if (event.target.href && event.target.href.startsWith('http')) {
+  if (event.target.matches('a[href^="http"]')) {
     event.preventDefault()
     shell.openExternal(event.target.href)
   }
