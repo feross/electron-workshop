@@ -26,7 +26,7 @@
     "workshop"
   ],
   "license": "MIT",
-  "main": "lib-solution/main.js",
+  "main": "lib/main.js",
   "private": true,
   "repository": {
     "type": "git",
