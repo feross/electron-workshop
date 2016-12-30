@@ -8,15 +8,15 @@ To help get you excited, take a look at some of the amazing apps that have alrea
 
 | Atom | Slack | Visual Studio Code | Nylas N1 |
 |---|---|---|---|
-| [<img width=150 src=http://electron.atom.io/images/apps/atom.png>](https://atom.io/) | [<img width=150 src=http://electron.atom.io/images/apps/slack.png>](https://slack.com/) | [<img width=150 src=http://electron.atom.io/images/apps/vscode.png>](https://code.visualstudio.com/) | [<img width=150 src=http://electron.atom.io/images/apps/nylas.png>](https://www.nylas.com/) |
+| [<img width=150 src=http://electron.atom.io/images/apps/atom-icon.png>](https://atom.io/) | [<img width=150 src=http://electron.atom.io/images/apps/slack-icon.png>](https://slack.com/) | [<img width=150 src=http://electron.atom.io/images/apps/visual-studio-code-icon.png>](https://code.visualstudio.com/) | [<img width=150 src=http://electron.atom.io/images/apps/nylas-n1-icon.png>](https://www.nylas.com/) |
 
 | WebTorrent | Brave | Hyper | Caprine |
 |---|---|---|---|
-| [<img width=150 src=http://electron.atom.io/images/apps/WebTorrent.png>](https://webtorrent.io/) | [<img width=150 src=http://electron.atom.io/images/apps/brave.png>](https://brave.com/) | [<img width=150 src=http://electron.atom.io/images/apps/hyper.png>](https://hyper.is/) | [<img width=150 src=http://electron.atom.io/images/apps/caprine.png>](https://github.com/sindresorhus/caprine) |
+| [<img width=150 src=http://electron.atom.io/images/apps/webtorrent-icon.png>](https://webtorrent.io/) | [<img width=150 src=http://electron.atom.io/images/apps/brave-browser-icon.png>](https://brave.com/) | [<img width=150 src=http://electron.atom.io/images/apps/hyper-icon.png>](https://hyper.is/) | [<img width=150 src=http://electron.atom.io/images/apps/caprine-icon.png>](https://github.com/sindresorhus/caprine) |
 
 | Keeweb | CryptoCat | ScreenCat | Playback |
 |---|---|---|---|
-| [<img width=150 src=http://electron.atom.io/images/apps/keeweb.png>](https://keeweb.info/) | [<img width=150 src=http://electron.atom.io/images/apps/cryptocat.png>](https://crypto.cat/) | [<img width=150 src=http://electron.atom.io/images/apps/screencat.png>](http://maxogden.github.io/screencat/) | [<img width=150 src=https://mafintosh.github.io/playback/images/icon.png>](https://mafintosh.github.io/playback/) |
+| [<img width=150 src=http://electron.atom.io/images/apps/keeweb-icon.png>](https://keeweb.info/) | [<img width=150 src=http://electron.atom.io/images/apps/cryptocat-icon.png>](https://crypto.cat/) | [<img width=150 src=http://electron.atom.io/images/apps/screencat-icon.png>](http://maxogden.github.io/screencat/) | [<img width=150 src=https://mafintosh.github.io/playback/images/icon.png>](https://mafintosh.github.io/playback/) |
 
 For more, take a look at this [huge list of Electron apps](http://electron.atom.io/apps/).
 
