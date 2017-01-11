@@ -18,6 +18,10 @@ To help get you excited, take a look at some of the amazing apps that have alrea
 |---|---|---|---|
 | [<img width=150 src=http://electron.atom.io/images/apps/keeweb-icon.png>](https://keeweb.info/) | [<img width=150 src=http://electron.atom.io/images/apps/cryptocat-icon.png>](https://crypto.cat/) | [<img width=150 src=http://electron.atom.io/images/apps/screencat-icon.png>](http://maxogden.github.io/screencat/) | [<img width=150 src=https://mafintosh.github.io/playback/images/icon.png>](https://mafintosh.github.io/playback/) |
 
+|Markdownify|
+|---|
+| [<img width=150 src=http://electron.atom.io/images/apps/markdownify-icon.png>](http://www.amitmerchant.com/electron-markdownify/) |
+
 For more, take a look at this [huge list of Electron apps](http://electron.atom.io/apps/).
 
 ## Credit
