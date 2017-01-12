@@ -581,9 +581,14 @@ const template = [
         click () { openFile() }
       },
       {
-        label: 'Save',
+        label: 'Save...',
         accelerator: 'CmdOrCtrl+S',
-        click () { saveFile() }
+        click () {
+          // We can't call saveFile(content) directly because we need to get
+          // the content from the renderer process. So, send a message to the
+          // renderer, telling it we want to save the file.
+          mainWindow.webContents.send('save-file')
+        }
       }
     ]
   },
@@ -686,7 +691,20 @@ if (process.platform === 'darwin') {
 }
 ```
 
-Welcome back! Let's take a closer look some of the moving pieces in the large chunk of code above. The template is an array of menu items. In this case, we have "File" and "Edit"—each with their own submenus. Under "File," we have two menu items: "Save" and "Open...". When clicked, they fire `openFile` and `saveFile` respectively. We're also assigning each an "accelerator" (also know as a shortcut or hot key).
+Welcome back! Let's take a closer look some of the moving pieces in the large chunk of code above. The template is an array of menu items. In this case, we have "File" and "Edit"—each with their own submenus. Under "File," we have two menu items: "Save..." and "Open...". When clicked, the "Open..." menu item will call `openFile`.
+
+However, as the inline comment states, the "Save..." menu item works a little differently. We can't call `saveFile(content)` directly in the main process like we did for `openFile()` because we need to get the content to save from the renderer process. So, send a message to the renderer, telling it we want to save the file. Then it can call `mainProcess.saveFile(html)` when it receives that message.
+
+To handle the 'save-file' message, add the following to the renderer:
+
+```js
+ipc.on('save-file', (event) => {
+  const html = $htmlView.innerHTML
+  mainProcess.saveFile(html)
+})
+```
+
+We're also assigning each menu item an "accelerator" (also know as a shortcut or hot key).
 
 In the "Edit" menu, we have some of the familiar commands: undo, redo, copy, cut, paste, select all. We probably don't want to reinvent the wheel. It would be great if each would do their normal thing. Electron allows us to define their "role," which will trigger the native OS behavior.
 

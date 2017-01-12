@@ -19,9 +19,14 @@ const template = [
         click () { openFile() }
       },
       {
-        label: 'Save',
+        label: 'Save...',
         accelerator: 'CmdOrCtrl+S',
-        click () { saveFile() }
+        click () {
+          // We can't call saveFile(content) directly because we need to get
+          // the content from the renderer process. So, send a message to the
+          // renderer, telling it we want to save the file.
+          mainWindow.webContents.send('save-file')
+        }
       }
     ]
   },

@@ -29,6 +29,11 @@ ipc.on('file-opened', (event, file, content) => {
   renderMarkdownToHtml(content)
 })
 
+ipc.on('save-file', (event) => {
+  const html = $htmlView.innerHTML
+  mainProcess.saveFile(html)
+})
+
 function renderMarkdownToHtml (markdown) {
   const html = marked(markdown)
   $htmlView.innerHTML = html
