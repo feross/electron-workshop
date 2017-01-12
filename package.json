@@ -27,7 +27,6 @@
   ],
   "license": "MIT",
   "main": "lib/main.js",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "git://github.com/feross/electron-workshop.git"
