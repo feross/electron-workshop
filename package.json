@@ -1,7 +1,7 @@
 {
   "name": "electron-workshop",
   "description": "A Markdown-to-HTML renderer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": {
     "name": "Feross Aboukhadijeh",
     "email": "feross@feross.org",
