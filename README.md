@@ -1,6 +1,46 @@
+
+
 # Build cross-platform desktop apps with Electron
 
 This is a workshop for learning how to build cross platform desktop apps with JavaScript, HTML, and CSS. We'll be using [Electron](http://electron.atom.io/) to accomplish this.
+
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+
+- [Build cross-platform desktop apps with Electron](#build-cross-platform-desktop-apps-with-electron)
+	- [Motivation](#motivation)
+	- [Credit](#credit)
+	- [Prerequisites](#prerequisites)
+- [Markdown Editor](#markdown-editor)
+	- [Getting Started and Acclimated](#getting-started-and-acclimated)
+	- [Challenge 1: Hello World](#challenge-1-hello-world)
+		- [Firing Up a Renderer Process](#firing-up-a-renderer-process)
+		- [Optional: Learn something extra!](#optional-learn-something-extra)
+	- [Challenge 2: Opening a File](#challenge-2-opening-a-file)
+		- [Sending Content to the Renderer Process](#sending-content-to-the-renderer-process)
+		- [Optional: Learn something extra!](#optional-learn-something-extra)
+	- [Challenge 3: Writing Renderer Code](#challenge-3-writing-renderer-code)
+		- [Displaying Content on the Page](#displaying-content-on-the-page)
+		- [Updating the HTML When the Markdown Changes](#updating-the-html-when-the-markdown-changes)
+	- [Challenge 4: Wiring Up the Buttons](#challenge-4-wiring-up-the-buttons)
+		- [Exporting Functionality](#exporting-functionality)
+		- [Optional: Learn something extra!](#optional-learn-something-extra)
+	- [Challenge 5: Working with the Clipboard](#challenge-5-working-with-the-clipboard)
+	- [Challenge 6: Saving Files](#challenge-6-saving-files)
+		- [Optional: Learn something extra!](#optional-learn-something-extra)
+	- [Challenge 7: Adding Menu Items](#challenge-7-adding-menu-items)
+	- [Challenge 8: Electron's `shell` Module](#challenge-8-electrons-shell-module)
+	- [Challenge 9: Appending to the Recent Documents Menu](#challenge-9-appending-to-the-recent-documents-menu)
+		- [Optional: Learn something extra!](#optional-learn-something-extra)
+	- [Challenge 10: Accessing the Outside World](#challenge-10-accessing-the-outside-world)
+		- [Activating the Buttons](#activating-the-buttons)
+	- [Challenge 11: Drag and Drop](#challenge-11-drag-and-drop)
+		- [Drag and drop on the window](#drag-and-drop-on-the-window)
+		- [Drag and drop on the app icon (Mac)](#drag-and-drop-on-the-app-icon-mac)
+	- [Challenge 12: More complete OS integrations](#challenge-12-more-complete-os-integrations)
+	- [Challenge 13: Package the app](#challenge-13-package-the-app)
+	- [Challenge 14: Go crazy!](#challenge-14-go-crazy)
+
+<!-- /TOC -->
 
 ## Motivation
 
@@ -866,7 +906,7 @@ Once you've completed this challenge, verify that drag and drop works, then move
 
 ### Drag and drop on the app icon (Mac)
 
-### Challenge 12: More complete OS integrations
+## Challenge 12: More complete OS integrations
 
 Right-clicking on the app icon should show useful functionality, like an "Open File..." item. This is what an app icon menu looks like:
 
@@ -874,7 +914,7 @@ Right-clicking on the app icon should show useful functionality, like an "Open F
 
 You can add a menu to the dock icon using the `app.dock.setMenu(menu)` API for Mac. There is a similar feature on Windows called "User Tasks" that you can access via the `app.setUserTasks(tasks)` API. For Linux, you can create a ".desktop" file that you can install into a special OS folder to add a menu to the app icon in the Unity Launcher.
 
-### Challenge 13: Package the app
+## Challenge 13: Package the app
 
 Now, let's prepare the app to be shipped to real users. This is called "packaging" an app. Nearly all of the magic is handled by a package called [`electron-packager`](https://github.com/electron-userland/electron-packager).
 
@@ -908,7 +948,7 @@ You'll also want to sign the binaries that you produce. On Mac and Windows, it's
 
 You can see how to do all these things and more by taking a look at the [well-commented build file for WebTorrent Desktop](https://github.com/feross/webtorrent-desktop/blob/master/bin/package.js).
 
-### Challenge 14: Go crazy!
+## Challenge 14: Go crazy!
 
 If you finish early, here are some ideas for extra features to add:
 
