@@ -103,18 +103,18 @@ globally with `npm install -g electron`. In general, it's better to just use the
 
 ### Firing Up a Renderer Process
 
-Now, that we can spin up our application, it's time to go ahead and build a user interface. In order to create a window for our application, we'll need to pull in the [`BrowserWindow`](http://electron.atom.io/docs/api/browser-window/) module.
+Now that we can spin up our application, it's time to go ahead and build a user interface. In order to create a window for our application, we'll need to pull in the [`BrowserWindow`](http://electron.atom.io/docs/api/browser-window/) module.
 
 ```js
 const BrowserWindow = electron.BrowserWindow
 ```
 
-We'll create the main window for our application when the application is ready. That said, we need declare a variable to store our main window in the top level scope. This is due to the combination of two facts:
+We'll create the main window for our application when the application is ready. That said, we need to declare a variable to store our main window in the top level scope. This is due to the combination of two facts:
 
 1. JavaScript has function scopes.
 1. Our `ready` event listener is a function.
 
-If we declared `mainWindow` variable in our event listener, it would be eligible for garbage collection as soon as that function is done executing, which is bad news. We'll declare `mainWindow` in the top-level scope.
+If we declared the `mainWindow` variable in our event listener, it would be eligible for garbage collection as soon as that function is done executing, which is bad news. We'll declare `mainWindow` in the top-level scope.
 
 To avoid this, we'll update `main.js` as follows:
 
@@ -138,7 +138,7 @@ app.on('ready', () => {
 
 If the user ever closes the window, we'll set the `mainWindow` back to `null`.
 
-Let's take our application for a spin again by running `electron .` from the command line. You should see something resembling the image below.
+Let's take our application for a spin again by running `npm start` from the command line. You should see something resembling the image below.
 
 ![Blank Window](images/01-blank-window.png)
 
@@ -235,7 +235,7 @@ app.on('ready', () => {
 
   mainWindow = new BrowserWindow()
 
-  mainWindow.loadURL('file://' + __dirname + '/index.html')
+  mainWindow.loadURL('file://' + path.join(__dirname, 'index.html'))
 
   // This event fires once the browser window's DOM is loaded
   mainWindow.webContents.on('did-finish-load', () => {
@@ -248,7 +248,7 @@ app.on('ready', () => {
 })
 ```
 
-Right now, we just log the name of the files selected to the console when we open a file. Try it out. You should notice the following that it's logging an array to the console. In theory, we're only going to want to open one file at a time in our application. So, we'll just grab the first file from the array.
+Right now, we just log the name of the files selected to the console when we open a file. Try it out. You should notice that it's logging an array to the console. In theory, we're only going to want to open one file at a time in our application. So, we'll just grab the first file from the array.
 
 ```js
 function openFile () {
@@ -264,7 +264,7 @@ function openFile () {
 }
 ```
 
-Now, that we have the location of our file, let's read from that location. `fs.readFileSync` returns a `Buffer` object. We know we're working with text. So, we'll turn that into a string using the `toString()` method.
+Now that we have the location of our file, let's read from that location. `fs.readFileSync` returns a `Buffer` object. We know we're working with text. So, we'll turn that into a string using the `toString()` method.
 
 Make sure you require the `fs` module towards the beginning of `main.js`:
 
@@ -304,7 +304,7 @@ You should now notice that images, PDFs and other assorted files that aren't tex
 
 ### Sending Content to the Renderer Process
 
-So, we can load files and log them to the terminal. That's great, but it's nothing we couldn't do in Node, right? We need to send the content we've loaded to over to the render process.
+So, we can load files and log them to the terminal. That's great, but it's nothing we couldn't do in Node, right? We need to send the content we've loaded over to the render process.
 
 Instead of logging to the console, let's send the content to the `mainWindow`. Replace the `console.log` in `openFile` with the following:
 
@@ -351,7 +351,7 @@ const electron = require('electron')
 const ipc = electron.ipcRenderer
 ```
 
-When we load a file, the main process is sending our renderer process a message with the contents over the `file-opened` channel. (This channel name is completely arbitrary could very well be `sandwich`.) Let's set up a listener.
+When we load a file, the main process is sending our renderer process a message with the contents over the `file-opened` channel. (This channel name is completely arbitrary and could very well be `sandwich`.) Let's set up a listener.
 
 ```js
 ipc.on('file-opened', (event, file, content) => {
@@ -388,7 +388,7 @@ ipc.on('file-opened', (event, file, content) => {
 })
 ```
 
-Next, we'll want to take that content, convert it to HTML, and display it in `$htmlView` element. In our `package.json`, we included the [marked][] library to take care of the conversion for us. That said, we need to require it in `renderer.js`.
+Next, we'll want to take that content, convert it to HTML, and display it in `$htmlView` element. In our `package.json`, we included the [marked] library to take care of the conversion for us. That said, we need to require it in `renderer.js`.
 
 [marked]: https://github.com/chjj/marked
 
@@ -435,7 +435,7 @@ In our application, we have three buttons in the top bar:
 2. Copy HTML
 3. Save HTML
 
-It's true that we already the ability to open a file from within our application—but only from the main process. Generally speaking, renderer processes should _not_ access native OS APIs like spawning file dialogs and whatnot.
+It's true that we already have the ability to open a file from within our application—but only from the main process. Generally speaking, renderer processes should _not_ access native OS APIs like spawning file dialogs and whatnot.
 
 So, we're out of luck, right? Not quite. It's true that we can't pull up a file dialog from a render process. But, we _can_ ask the main process to open one up on our behalf.
 
@@ -469,7 +469,7 @@ $openFileButton.addEventListener('click', () => {
 
 When the "Open File" button is clicked, it will call the `openFile` function from the main process and display the file dialog.
 
-It's not necessary, but we can remove the call `openFile()` when the application starts up now that we have a way to do it from inside the application.
+It's not necessary, but we can remove the call to `openFile()` when the application starts up now that we have a way to do it from inside the application.
 
 ### Optional: Learn something extra!
 
