@@ -1,46 +1,6 @@
-
-
 # Build cross-platform desktop apps with Electron
 
 This is a workshop for learning how to build cross platform desktop apps with JavaScript, HTML, and CSS. We'll be using [Electron](http://electron.atom.io/) to accomplish this.
-
-<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
-
-- [Build cross-platform desktop apps with Electron](#build-cross-platform-desktop-apps-with-electron)
-	- [Motivation](#motivation)
-	- [Credit](#credit)
-	- [Prerequisites](#prerequisites)
-- [Markdown Editor](#markdown-editor)
-	- [Getting Started and Acclimated](#getting-started-and-acclimated)
-	- [Challenge 1: Hello World](#challenge-1-hello-world)
-		- [Firing Up a Renderer Process](#firing-up-a-renderer-process)
-		- [Optional: Learn something extra!](#optional-learn-something-extra)
-	- [Challenge 2: Opening a File](#challenge-2-opening-a-file)
-		- [Sending Content to the Renderer Process](#sending-content-to-the-renderer-process)
-		- [Optional: Learn something extra!](#optional-learn-something-extra)
-	- [Challenge 3: Writing Renderer Code](#challenge-3-writing-renderer-code)
-		- [Displaying Content on the Page](#displaying-content-on-the-page)
-		- [Updating the HTML When the Markdown Changes](#updating-the-html-when-the-markdown-changes)
-	- [Challenge 4: Wiring Up the Buttons](#challenge-4-wiring-up-the-buttons)
-		- [Exporting Functionality](#exporting-functionality)
-		- [Optional: Learn something extra!](#optional-learn-something-extra)
-	- [Challenge 5: Working with the Clipboard](#challenge-5-working-with-the-clipboard)
-	- [Challenge 6: Saving Files](#challenge-6-saving-files)
-		- [Optional: Learn something extra!](#optional-learn-something-extra)
-	- [Challenge 7: Adding Menu Items](#challenge-7-adding-menu-items)
-	- [Challenge 8: Electron's `shell` Module](#challenge-8-electrons-shell-module)
-	- [Challenge 9: Appending to the Recent Documents Menu](#challenge-9-appending-to-the-recent-documents-menu)
-		- [Optional: Learn something extra!](#optional-learn-something-extra)
-	- [Challenge 10: Accessing the Outside World](#challenge-10-accessing-the-outside-world)
-		- [Activating the Buttons](#activating-the-buttons)
-	- [Challenge 11: Drag and Drop](#challenge-11-drag-and-drop)
-		- [Drag and drop on the window](#drag-and-drop-on-the-window)
-		- [Drag and drop on the app icon (Mac)](#drag-and-drop-on-the-app-icon-mac)
-	- [Challenge 12: More complete OS integrations](#challenge-12-more-complete-os-integrations)
-	- [Challenge 13: Package the app](#challenge-13-package-the-app)
-	- [Challenge 14: Go crazy!](#challenge-14-go-crazy)
-
-<!-- /TOC -->
 
 ## Motivation
 
@@ -58,10 +18,6 @@ To help get you excited, take a look at some of the amazing apps that have alrea
 |---|---|---|---|
 | [<img width=150 src=http://electron.atom.io/images/apps/keeweb-icon.png>](https://keeweb.info/) | [<img width=150 src=http://electron.atom.io/images/apps/cryptocat-icon.png>](https://crypto.cat/) | [<img width=150 src=http://electron.atom.io/images/apps/screencat-icon.png>](http://maxogden.github.io/screencat/) | [<img width=150 src=https://mafintosh.github.io/playback/images/icon.png>](https://mafintosh.github.io/playback/) |
 
-|Markdownify|
-|---|
-| [<img width=150 src=http://electron.atom.io/images/apps/markdownify-icon.png>](http://www.amitmerchant.com/electron-markdownify/) |
-
 For more, take a look at this [huge list of Electron apps](http://electron.atom.io/apps/).
 
 ## Credit
@@ -76,7 +32,38 @@ We'll primarily be working through one project today. But there is a second one,
 
 # Markdown Editor
 
-This is a tutorial for building a Markdown-to-HTML renderer using Electron.
+This is a tutorial for building a Markdown-to-HTML renderer using Electron. The final app will be similar to [Markdownify](http://www.amitmerchant.com/electron-markdownify/).
+
+## Table of contents
+
+- [Getting Started and Acclimated](#getting-started-and-acclimated)
+- [Challenge 1: Hello World](#challenge-1-hello-world)
+  - [Firing Up a Renderer Process](#firing-up-a-renderer-process)
+  - [Optional: Learn something extra!](#optional-learn-something-extra)
+- [Challenge 2: Opening a File](#challenge-2-opening-a-file)
+  - [Sending Content to the Renderer Process](#sending-content-to-the-renderer-process)
+  - [Optional: Learn something extra!](#optional-learn-something-extra)
+- [Challenge 3: Writing Renderer Code](#challenge-3-writing-renderer-code)
+  - [Displaying Content on the Page](#displaying-content-on-the-page)
+  - [Updating the HTML When the Markdown Changes](#updating-the-html-when-the-markdown-changes)
+- [Challenge 4: Wiring Up the Buttons](#challenge-4-wiring-up-the-buttons)
+  - [Exporting Functionality](#exporting-functionality)
+  - [Optional: Learn something extra!](#optional-learn-something-extra)
+- [Challenge 5: Working with the Clipboard](#challenge-5-working-with-the-clipboard)
+- [Challenge 6: Saving Files](#challenge-6-saving-files)
+  - [Optional: Learn something extra!](#optional-learn-something-extra)
+- [Challenge 7: Adding Menu Items](#challenge-7-adding-menu-items)
+- [Challenge 8: Electron's `shell` Module](#challenge-8-electrons-shell-module)
+- [Challenge 9: Appending to the Recent Documents Menu](#challenge-9-appending-to-the-recent-documents-menu)
+  - [Optional: Learn something extra!](#optional-learn-something-extra)
+- [Challenge 10: Accessing the Outside World](#challenge-10-accessing-the-outside-world)
+  - [Activating the Buttons](#activating-the-buttons)
+- [Challenge 11: Drag and Drop](#challenge-11-drag-and-drop)
+  - [Drag and drop on the window](#drag-and-drop-on-the-window)
+  - [Drag and drop on the app icon (Mac)](#drag-and-drop-on-the-app-icon-mac)
+- [Challenge 12: More complete OS integrations](#challenge-12-more-complete-os-integrations)
+- [Challenge 13: Package the app](#challenge-13-package-the-app)
+- [Challenge 14: Go crazy!](#challenge-14-go-crazy)
 
 ## Getting Started and Acclimated
 
