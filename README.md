@@ -519,7 +519,7 @@ const clipboard = remote.clipboard
 When the user clicks on the "Copy HTML" button, we'll go ahead and write the contents of the `$htmlView` element to the clipboard.
 
 ```js
-$copyHtmlButton.on('click', () => {
+$copyHtmlButton.addEventListener('click', () => {
   const html = $htmlView.innerHTML
   clipboard.writeText(html)
 })
