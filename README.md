@@ -205,7 +205,7 @@ These tasks are totally optional, but highly recommended to learn about some of 
 
 2. Try to open the window at the top left of the screen, instead of in the center (which is default).
 
-3. Try to change the title of the window. (Electron supports two ways of setting the window title. There is a `BrowserWindow` constructor option, but if none is specified, then the `<title>` tag in the HTML will be used.
+3. Try to change the title of the window. Electron supports two ways of setting the window title. The `BrowserWindow` constructor option will be used if the `<title>` tag in the HTML is not specified.
 
 4. Try to make the window "float on top" so no other windows can be drawn above it.
 
