@@ -234,7 +234,7 @@ In `index.html`, replace the contents of `<body>` with the following:
 </section>
 ```
 
-We'll start by prompting the user for a file to open when the application is ready. In order to make this happen, we'll need Electron's `dialog` module. Add the following to `main.js` just below where we require our other Electron modules.
+We'll start by prompting the user for a file to open when the application is ready. In order to make this happen, we'll need Electron's [`dialog`](http://electron.atom.io/docs/api/dialog/) module. Add the following to `main.js` just below where we require our other Electron modules.
 
 ```js
 const dialog = electron.dialog
@@ -343,7 +343,7 @@ This won't make anything appear in the window just yet, because we need to handl
 
 ### Optional: Learn something extra!
 
-1. Try setting a custom label for the confirmation button.
+1. Try setting a custom label for the [`dialog`](http://electron.atom.io/docs/api/dialog/) confirmation button.
 
 2. Try allowing multiple files to be selected in a single dialog box. See what kind of object gets returned by the callback.
 
