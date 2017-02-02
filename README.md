@@ -464,7 +464,7 @@ In our application, we have three buttons in the top bar:
 
 It's true that we already have the ability to open a file from within our application—but only from the main process. Generally speaking, renderer processes should _not_ access native OS APIs like spawning file dialogs and whatnot.
 
-So, we're out of luck, right? Not quite. It's true that we can't pull up a file dialog from a render process. But, we _can_ ask the main process to open one up on our behalf.
+So, we're out of luck, right? Not quite. It's true that we can't pull up a file dialog from a renderer process. But, we _can_ ask the main process to open one up on our behalf.
 
 Electron comes with a `remote` module, which allows us to pull in functionality from other processes. Let's require the `remote` module in `renderer.js`.
 
@@ -731,7 +731,7 @@ ipc.on('save-file', (event) => {
 })
 ```
 
-We're also assigning each menu item an "accelerator" (also know as a shortcut or hot key).
+We're also assigning each menu item an "accelerator" (also known as a shortcut or hot key).
 
 In the "Edit" menu, we have some of the familiar commands: undo, redo, copy, cut, paste, select all. We probably don't want to reinvent the wheel. It would be great if each would do their normal thing. Electron allows us to define their "role," which will trigger the native OS behavior.
 
@@ -908,7 +908,7 @@ Now, let's prepare the app to be shipped to real users. This is called "packagin
 You can quickly see it in action by running `npm run package`. This will build an executable version of the application that works on the
 current OS and architecture (e.g. Mac 64-bit, Windows 32-bit, Linux 64-bit, etc.).
 
-Note: When you launch the exectuble on Mac, the menu bar should show the correct app title "Markdown Editor" now, not "Electron".
+Note: When you launch the executable on Mac, the menu bar should show the correct app title "Markdown Editor" now, not "Electron".
 
 To build the app for all possible architectures, you can use `npm run package-all`. Note: this can take a while because a ~40MB precompiled version of Electron must be downloaded for each OS/architecture combination. Currently this is:
 
@@ -920,7 +920,7 @@ To build the app for all possible architectures, you can use `npm run package-al
 - Linux, 32-bit
 - Linux, armv7l
 
-One of the nicest things about `electron-packager` is that you don't need to own a Mac, Windows, and Linux computer (or use VMs) in order to create binaries for each of these platforms, the way that most native app development works. Instead, `electron-package` downloads a precompiled Electron app and replaces the `app` folder inside with the code from your app, and replaces the app icon with your app icon, if you have one. That's it.
+One of the nicest things about `electron-packager` is that you don't need to own a Mac, Windows, and Linux computer (or use VMs) in order to create binaries for each of these platforms, the way that most native app development works. Instead, `electron-packager` downloads a precompiled Electron app and replaces the `app` folder inside with the code from your app, and replaces the app icon with your app icon, if you have one. That's it.
 
 Things get more complicated if you use a node module that contains native code. That's because that code needs to compiled separately for each platform. To keep things simple, try to avoid using modules that contain native code unless absolutely necessary. That will allow you to build for all platforms from any platform.
 
