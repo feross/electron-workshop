@@ -386,7 +386,7 @@ ipc.on('file-opened', (event, file, content) => {
 })
 ```
 
-You should now see the contents of the file you opened in the console of your renderer process.
+You should now see the contents of the file you opened in the console of your renderer process in the Developer Tools.
 
 ### Displaying Content on the Page
 
