@@ -745,10 +745,10 @@ In the "Edit" menu, we have some of the familiar commands: undo, redo, copy, cut
 
 You might also notice that we're defining the accelerator as "CmdOrCtrl+C". Electron will make the right choice on our behalf when it compiles for Mac, Windows, and/or Linux.
 
-Application for Mac have an additional menu with the application's name and some common OS-specific menu items. We only want to add this menu if our Electron application is running in Mac.
+Application for Mac have an additional menu with the application's name and some common OS-specific menu items. We only want to add this menu if our Electron application is running on Mac.
 
 ```js
-if (process.platform == 'darwin') { … }
+if (process.platform === 'darwin') { … }
 ```
 
 [Darwin][] is the UNIX foundation that Mac OS is built on. The `process.platform` is baked into Node and returns 'darwin', 'freebsd', 'linux', 'sunos' or 'win32' depending on the platform it's being run from.
