@@ -26,6 +26,8 @@ Vast portions of this workshop are based on a similar [workshop](https://gist.gi
 
 ## Prerequisites
 
+Electron apps build and run on Mac, Windows and Linux. You are free to choose your favorite operating system to run this tutorial.
+
 Participants should have the latest version of [Node.js](http://nodejs.org/) installed. (The latest version is v6.x LTS.)
 
 We'll primarily be working through one project today. But there is a second one, which is an opportunity to practice on your own after the workshop. The _best_ way to get set up and ready to roll before the workshop is to clone this repository and run `npm install` within it.
@@ -121,7 +123,7 @@ app.on('ready', () => {
 There isn't much to look at yet, but if we run `npm start`, you should notice the following.
 
 1. Our message is logged to the console.
-1. An Electron icon pops up in the Dock.
+1. On Mac an Electron icon pops up in the Dock.
 
 Hit `Control-C` to kill the application.
 
@@ -349,7 +351,7 @@ This won't make anything appear in the window just yet, because we need to handl
 
 ## Challenge 3: Writing Renderer Code
 
-All of the code we've written so far has been in the main process. Now, it's time to write some code in the renderer process to—umm—render our content. Let's load up `renderer.js` by adding the following to `index.html` before `</body>`.
+All of the code we've written so far has been in the main process. Now, it's time to write some code in the renderer process to—umm—render our content. Let's load up `renderer.js` by adding the following to `index.html` at the end of the body, right before `</body>`. This means `renderer.js` will be executed as last step of the page rendering and thus the script can access all the previously rendered DOM elements.
 
 ```html
 <script>
@@ -391,7 +393,8 @@ You should now see the contents of the file you opened in the console of your re
 ### Displaying Content on the Page
 
 We'll use a shorthand for `querySelector` in our renderer process to make things
-a little more concise. Let's create it in our renderer process as follows:
+a little more concise. We'll create a function named `$` that gets a selector as parameter and returns the element. Let's create it in our renderer process as follows:
+
 
 ```js
 const $ = selector => document.querySelector(selector)
