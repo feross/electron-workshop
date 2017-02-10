@@ -90,18 +90,15 @@ Everything in Electron lives inside of the `electron` library. Let's start by re
 const electron = require('electron')
 ```
 
-Electron contains many [modules][] that we'll use for building our application. The first—and arguably, most important—that we're going to need is the `app` module. All modules exist as properties on the `electron` object. We're going to be using the `app` module pretty often, so let's store it in its own variable.
-
-[modules]: http://electron.atom.io/docs/
+Electron contains many [modules](http://electron.atom.io/docs/) that we'll use for building our application. The first—and arguably, most important—that we're going to need is the `app` module. All modules exist as properties on the `electron` object. We're going to be using the `app` module pretty often, so let's store it in its own variable.
 
 ```js
 const electron = require('electron')
 const app = electron.app
 ```
 
-The [`app`][app] module has a number of life-cycle events. Here are a few examples:
+The [`app`](http://electron.atom.io/docs/api/app/) module has a number of life-cycle events. Here are a few examples:
 
-[app]: http://electron.atom.io/docs/api/app/
 
 - `ready`
 - `quit`
@@ -511,7 +508,7 @@ It's not necessary, but we can remove the call to `openFile()` when the applicat
 
 Now that we have the first button in place, we'll go ahead and get the second button working.
 
-The second button is labeled "Copy HTML." When it's working it should take the rendered HTML output and write it to the clipboard. It shouldn't be surprising to you when I say that Electron has a `clipboard` module that makes it easy to work with the clipboard. Because it works with the OS's clipboard, we'll require it from the main process.
+The second button is labeled "Copy HTML." When it's working it should take the rendered HTML output and write it to the clipboard. It shouldn't be surprising to you when I say that Electron has a [`clipboard`](http://electron.atom.io/docs/api/clipboard/) module that makes it easy to work with the clipboard. Because it works with the OS's clipboard, we'll require it from the main process.
 
 Let's require the `clipboard` module in `renderer.js`:
 
@@ -577,7 +574,7 @@ We've successfully implemented a first pass at saving files to the filesystem wi
 
 Having a button for opening and saving files is pretty neat, but it's not the pattern we're used to in desktop applications. Typically, desktop applications have a "File" menu "Open" and "Save" items. Up to this point, Electron has given us some sensible defaults for menu items. (Fire up your application and check out the menu bar if haven't already.)
 
-Let's go and pull in Electron's `Menu` module. (This goes in `main.js`.)
+Let's go and pull in Electron's [`Menu`](http://electron.atom.io/docs/api/menu) module. (This goes in `main.js`.)
 
 ```js
 const Menu = electron.Menu
@@ -764,7 +761,7 @@ Note: Mac will stubbornly continue to use "Electron" as the application title. I
 
 ## Challenge 8: Electron's `shell` Module
 
-We have a little bit of a bug in our application. If we have a link in our Markdown file and we click it, it will load inside of application which kind of ruins the illusion that we're building a native application. Even worse: we don't have a back button. So, we can't return to our regularly-schedule application. Luckily, Electron's `shell` module allows us to access the OS's ability to open files as well as expose their location in the file system.
+We have a little bit of a bug in our application. If we have a link in our Markdown file and we click it, it will load inside of application which kind of ruins the illusion that we're building a native application. Even worse: we don't have a back button. So, we can't return to our regularly-schedule application. Luckily, Electron's [`shell`](http://electron.atom.io/docs/api/shell/) module allows us to access the OS's ability to open files as well as expose their location in the file system.
 
 In `renderer.js`, let's bring in Electron's `shell` module:
 
@@ -838,9 +835,8 @@ const $showInFileSystemButton = $('#show-in-file-system')
 const $openInDefaultEditorButton = $('#open-in-default-editor')
 ```
 
-As we discussed earlier, Electron's `shell` module [provides functionality to both the main and renderer processes that aides with desktop integration][shell].
-
-[shell]: http://electron.atom.io/docs/v0.36.8/api/shell/
+As we discussed earlier, Electron's [`shell`](http://electron.atom.io/docs/api/shell/)
+provides functionality to both the main and renderer processes that aides with desktop integration.
 
 ### Activating the Buttons
 
