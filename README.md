@@ -90,7 +90,7 @@ Everything in Electron lives inside of the `electron` library. Let's start by re
 const electron = require('electron')
 ```
 
-Electron contains many [modules](http://electron.atom.io/docs/) that we'll use for building our application. The first—and arguably, most important—that we're going to need is the `app` module. All modules exist as properties on the `electron` object. We're going to be using the `app` module pretty often, so let's store it in its own variable.
+Electron contains many [modules](http://electron.atom.io/docs/) that we'll use for building our application. The first—and arguably, most important—that we're going to need is the [`app`](http://electron.atom.io/docs/api/app/) module. All modules exist as properties on the `electron` object. We're going to be using the `app` module pretty often, so let's store it in its own variable.
 
 ```js
 const electron = require('electron')
@@ -170,7 +170,7 @@ Let's take our application for a spin again by running `npm start` from the comm
 
 Let's actually load some content, shall we?
 
-Make sure you require the `path` module towards the beginning of `main.js`:
+Make sure you require the [`path`](http://electron.atom.io/docs/api/path/) module towards the beginning of `main.js`:
 
 ```js
 const path = require('path')
@@ -292,7 +292,7 @@ function openFile () {
 
 Now that we have the location of our file, let's read from that location. `fs.readFileSync` returns a `Buffer` object. We know we're working with text. So, we'll turn that into a string using the `toString()` method.
 
-Make sure you require the `fs` module towards the beginning of `main.js`:
+Make sure you require the [`fs`](http://electron.atom.io/docs/api/fs/) module towards the beginning of `main.js`:
 
 ```js
 const fs = require('fs')
@@ -370,7 +370,7 @@ app.on('ready', () => {
 
 (If this is distracting for you, feel free to remove this line, you'll be able to open these tools using the application's menus until we replace them later on this in tutorial.)
 
-The main process and our renderer process are completely separate. In order to facilitate communication between the two, we need to use Electron's interprocess communication (IPC) protocol. In `renderer.js`, we'll require Electron and the `ipcRenderer` module.
+The main process and our renderer process are completely separate. In order to facilitate communication between the two, we need to use Electron's interprocess communication (IPC) protocol. In `renderer.js`, we'll require Electron and the [`ipcRenderer`](http://electron.atom.io/docs/api/ipc-renderer/) module.
 
 ```js
 const electron = require('electron')
@@ -466,7 +466,7 @@ It's true that we already have the ability to open a file from within our applic
 
 So, we're out of luck, right? Not quite. It's true that we can't pull up a file dialog from a renderer process. But, we _can_ ask the main process to open one up on our behalf.
 
-Electron comes with a `remote` module, which allows us to pull in functionality from other processes. Let's require the `remote` module in `renderer.js`.
+Electron comes with a [`remote`](http://electron.atom.io/docs/api/remote/)  module, which allows us to pull in functionality from other processes. Let's require the `remote` module in `renderer.js`.
 
 ```js
 const remote = electron.remote
@@ -574,7 +574,7 @@ We've successfully implemented a first pass at saving files to the filesystem wi
 
 Having a button for opening and saving files is pretty neat, but it's not the pattern we're used to in desktop applications. Typically, desktop applications have a "File" menu "Open" and "Save" items. Up to this point, Electron has given us some sensible defaults for menu items. (Fire up your application and check out the menu bar if haven't already.)
 
-Let's go and pull in Electron's [`Menu`](http://electron.atom.io/docs/api/menu) module. (This goes in `main.js`.)
+Let's go and pull in Electron's [`Menu`](http://electron.atom.io/docs/api/menu/) module. (This goes in `main.js`.)
 
 ```js
 const Menu = electron.Menu
