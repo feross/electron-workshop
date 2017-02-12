@@ -170,7 +170,7 @@ Let's take our application for a spin again by running `npm start` from the comm
 
 Let's actually load some content, shall we?
 
-Make sure you require the [`path`](http://electron.atom.io/docs/api/path/) module towards the beginning of `main.js`:
+Make sure you require the [`path`](https://nodejs.org/api/path.html) module towards the beginning of `main.js`:
 
 ```js
 const path = require('path')
@@ -292,7 +292,7 @@ function openFile () {
 
 Now that we have the location of our file, let's read from that location. `fs.readFileSync` returns a `Buffer` object. We know we're working with text. So, we'll turn that into a string using the `toString()` method.
 
-Make sure you require the [`fs`](http://electron.atom.io/docs/api/fs/) module towards the beginning of `main.js`:
+Make sure you require the [`fs`](https://nodejs.org/api/fs.html) module towards the beginning of `main.js`:
 
 ```js
 const fs = require('fs')
