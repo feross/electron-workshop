@@ -84,7 +84,7 @@ In a more robust application, you might break stuff into smaller files, but—fo
 
 Now that we have our dependencies and some basic files, let's get our Electron application to the point where we can launch it.
 
-Everything in Electron lives inside of the `electron` library. Let's start by requiring it inside of `main.js`.
+[Everything](http://electron.atom.io/docs/all/) in Electron lives inside of the `electron` library. Let's start by requiring it inside of `main.js`.
 
 ```js
 const electron = require('electron')
@@ -97,16 +97,15 @@ const electron = require('electron')
 const app = electron.app
 ```
 
-The [`app`](http://electron.atom.io/docs/api/app/) module has a number of life-cycle events. Here are a few examples:
+The [`app`](http://electron.atom.io/docs/api/app/) module has a number of life-cycle [events](http://electron.atom.io/docs/api/app/#events). Here are a few examples:
 
+- [`ready`](http://electron.atom.io/docs/api/app/#event-ready)
+- [`quit`](http://electron.atom.io/docs/api/app/#event-quit)
+- [`before-quit`](http://electron.atom.io/docs/api/app/#event-before-quit)
+- [`will-quit`](http://electron.atom.io/docs/api/app/#event-will-quit)
+- [`window-all-closed`](http://electron.atom.io/docs/api/app/#event-window-all-closed)
 
-- `ready`
-- `quit`
-- `before-quit`
-- `will-quit`
-- `window-all-closed`
-
-Right now, displaying a user interface when the application is `ready` is our primary concern. So, we'll listen for the `ready` event.
+Right now, displaying a user interface when the application is `ready` is our primary concern. So, we'll listen for the `ready` event and pass an [arrow function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Functions/Arrow_functions) that does some logging.
 
 ```js
 const electron = require('electron')
