@@ -1,4 +1,7 @@
-# Build cross-platform desktop apps with Electron
+# Build cross-platform desktop apps with Electron [![javascript style guide][standard-image]][standard-url]
+
+[standard-image]: https://img.shields.io/badge/code_style-standard-brightgreen.svg
+[standard-url]: https://standardjs.com
 
 This is a workshop for learning how to build cross platform desktop apps with JavaScript, HTML, and CSS. We'll be using [Electron](http://electron.atom.io/) to accomplish this.
 
