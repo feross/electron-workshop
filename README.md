@@ -576,7 +576,7 @@ We've successfully implemented a first pass at saving files to the filesystem wi
 
 Having a button for opening and saving files is pretty neat, but it's not the pattern we're used to in desktop applications. Typically, desktop applications have a "File" menu "Open" and "Save" items. Up to this point, Electron has given us some sensible defaults for menu items. (Fire up your application and check out the menu bar if haven't already.)
 
-Let's go and pull in Electron's [`Menu`](http://electron.atom.io/docs/api/menu/) module. (This goes in `main.js`.)
+Let's go and pull in Electron's [`Menu`](http://electron.atom.io/docs/api/menu/) class. (This goes in `main.js`.)
 
 ```js
 const Menu = electron.Menu
