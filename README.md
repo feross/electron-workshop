@@ -1,5 +1,7 @@
 # Build cross-platform desktop apps with Electron [![javascript style guide][standard-image]][standard-url]
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/feross/electron-workshop.svg)](https://greenkeeper.io/)
+
 [standard-image]: https://img.shields.io/badge/code_style-standard-brightgreen.svg
 [standard-url]: https://standardjs.com
 
